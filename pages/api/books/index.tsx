@@ -1,9 +1,10 @@
 // pages/api/books/index.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '../../../src/lib/prisma';
+import { Buku } from '@/types/BukuType';
 
 type Data = {
-  books?: any[];
+  books?: Buku[];
   error?: string;
 }
 
@@ -14,7 +15,7 @@ export default async function handler(
   if (req.method === 'GET') {
     try {
       const books = await prisma.book.findMany();
-      res.status(200).json({ books });
+      res.status(200).json({ books  } as Data);
     } catch (error) {
       res.status(500).json({ error: 'Failed to fetch books' });
     }
